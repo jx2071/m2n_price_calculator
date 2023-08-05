@@ -798,6 +798,8 @@ export default function Example() {
   ];
   const [selected, setSelected] = useState(category[0]);
   const [subtotal, setSubtotal] = useState(0);
+  const [taxRate, setTaxRate] = useState(0.08875);
+  const [editTaxRate, setEditTaxRate] = useState(false);
   const [subLabor, setSubLabor] = useState(0);
   const [subMaterial, setSubMaterial] = useState(0);
   useEffect(() => {
@@ -863,7 +865,7 @@ export default function Example() {
         </div>
       )}
       {newProject && (
-        <div className="p-12 ">
+        <div className="p-12 pt-24">
           <div className="sm:flex sm:items-center">
             <div className="sm:flex-auto">
               <h1 className="text-base font-semibold leading-6 text-gray-900">
@@ -984,7 +986,42 @@ export default function Example() {
                     colSpan={3}
                     className="hidden pl-4 pr-3 pt-4 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0"
                   >
-                    税率 8.875%
+                    <div className="justify-end flex">
+                      <span className="ml-4">
+                        税率 {!editTaxRate && taxRate * 100 + "%"}
+                      </span>
+                      {!editTaxRate && (
+                        <button
+                          onClick={() => {
+                            setEditTaxRate(true);
+                          }}
+                        >
+                          <PencilSquareIcon className="w-5 h-5 " />
+                        </button>
+                      )}
+                      {editTaxRate && (
+                        <>
+                          <input
+                            type="number"
+                            id="taxRate"
+                            min={0}
+                            className="w-12 h-5 border-gray-100 border-2 text-gray-500"
+                            value={taxRate * 100}
+                            onChange={(e) => {
+                              setTaxRate(Number(e.target.value) / 100);
+                            }}
+                          />
+                          <span>% </span>
+                          <button
+                            onClick={() => {
+                              setEditTaxRate(false);
+                            }}
+                          >
+                            <CheckIcon className="w-4 h-4 text-green-500" />
+                          </button>
+                        </>
+                      )}
+                    </div>
                   </th>
                   <th
                     scope="row"
@@ -993,7 +1030,7 @@ export default function Example() {
                     Tax
                   </th>
                   <td className="pl-3 pr-4 pt-4 text-right text-sm text-gray-500 sm:pr-0">
-                    ${numberWithCommas(subtotal * 0.08875)}
+                    ${numberWithCommas(subtotal * taxRate)}
                   </td>
                 </tr>
                 <tr>
@@ -1011,7 +1048,7 @@ export default function Example() {
                     Total
                   </th>
                   <td className="pl-3 pr-4 pt-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">
-                    ${numberWithCommas(subtotal * 1.08875)}
+                    ${numberWithCommas(subtotal * (1 + taxRate))}
                   </td>
                 </tr>
               </tfoot>
