@@ -6,7 +6,7 @@ function numberWithCommas(x: number) {
   return x.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-export default function InteriorBox(props: any) {
+export default function CleaningBox(props: any) {
   const {
     cost,
     unit,
@@ -18,8 +18,8 @@ export default function InteriorBox(props: any) {
       material: number;
       total: number;
     };
-    unit: string;
     description: string;
+    unit: string;
     setSelectedInfo: ({
       area,
       labor,
@@ -61,7 +61,7 @@ export default function InteriorBox(props: any) {
     <>
       <form className="mt-4 ">
         <div className="space-y-12">
-          <div className=" mt-5 border-b border-gray-900/10 pb-12">
+          <div className="mt-5 border-b border-gray-900/10 pb-12">
             <p className="text-sm text-gray-500">{description}</p>
             <div className="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <div className="sm:col-span-4">
@@ -69,7 +69,7 @@ export default function InteriorBox(props: any) {
                   htmlFor="area"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  请输入面积/数量 <span className="text-red-400">*</span>
+                  请输入需要数量/时间 <span className="text-red-400">*</span>
                 </label>
                 <div className="mt-2">
                   <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-sm">
